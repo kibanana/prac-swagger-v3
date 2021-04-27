@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: test API
+  description: Swagger open api 3.0 연습
+  version: 1.0.0
+servers:
+- url: http://localhost:{port}/{basePath}
+  description: Local Server
+  variables:
+    port:
+      default: "8000"
+    basePath:
+      default: v1
+security:
+- BearerAuth: []
+paths:
+  /boards:
+    get:
+      description: board 컬렉션 가져오기
+      operationId: getUsers
+      parameters:
+      - name: searchString
+        in: query
+        description: 검색을 위한 문자열
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: sortKey
+        in: query
+        description: 정렬을 위한 키
+        required: false
+        style: form
+        explode: true
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: 성공
+      x-swagger-router-controller: Default
+components:
+  schemas: {}
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
